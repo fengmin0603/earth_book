@@ -1,14 +1,20 @@
 {
   "pages":[
     "pages/category/index",
+    "pages/start/start",
+    "pages/authorize/authorize",
     "pages/index/index",
+    "pages/bookDetail/bookDetail",
+    "pages/buyCar/buyCar",
+    "pages/toPay/toPay",
     "pages/logs/logs"
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarBackgroundColor": "#00afb4",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#00afb4"
   },
   "tabBar": {
     "color": "#7A7E83",
@@ -35,7 +41,7 @@
         "text": "分类"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/buyCar/buyCar",
         "iconPath": "images/nav/cart-off.png",
         "selectedIconPath": "images/nav/cart-on.png",
         "text": "购物车"

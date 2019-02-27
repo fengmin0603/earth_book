@@ -3,43 +3,27 @@ var starscore = require("../../templates/starscore/starscore.js");
 Page(Object.assign({}, {
   data: {
     onLoadStatus: true,
-    indicatorDots: true,
-    loadingStatus: false, // loading
-    loadingFinish: false,
     shopLogo: 'https://cdn.it120.cc/apifactory/2018/06/10/527a0d6e3b3f1ffc32748193d743da26.jpg',
-    shopPrompt: [],
-    shopDelivery: [],
-    swiperCurrent: 0,
-    selectCurrent: 0,
     categories: [],
+    shopDelivery: ['¥28起送 | 同城免费送 | 由于业务有限仅送县城范围'],
+    shopPrompt: '正常营业时间8:00AM-19:00PM',
     activeCategoryId: null,
     goods: [],
     goodsList: [],
-    goodsListCurrent: [],
-    scrollTop: 0,
     page: 1,
     pageSize: 5000,
-    classifyViewed: null,
     width: 0,
-    height: 0,
-    movable: {
-      text: '                                                                           '
-    },
-  },
-  onPullDownRefresh: function () {
-    var that = this
-    wx.showNavigationBarLoading()
-    that.reLoad()
-    wx.hideNavigationBarLoading() //完成停止加载
-    wx.stopPullDownRefresh() //停止下拉刷新
+    height: 0
   },
   onLoad: function (options) {
     var that = this
-
+    /**
+     * 设置当前页面顶部标题
+     */
     wx.setNavigationBarTitle({
-      // title: wx.getStorageSync('mallName')//同步获取商城的名称
-      title: '大地书园'
+      title: wx.getStorageSync('mallName')
     })
+
     that.setData({
       categories: app.globalData.categories,
       goods: app.globalData.goods,
@@ -51,13 +35,16 @@ Page(Object.assign({}, {
       bgGreen: app.globalData.bgGreen,
       bgBlue: app.globalData.bgBlue
     })
+
+    /**
+     * 遍历商品分类数组，初始化选中某一分类的状态，并获取该分类下商品数组
+     */
     for (var i = 0; i < that.data.categories.length; i++) {
       if (that.data.activeCategoryId === that.data.categories[i].id) {
         that.setData({
           classifyViewed: that.data.categories[i].id,
           scrolltop: 0,
           goodsListCurrent: that.data.goodsList[i],
-
         })
       }
     }
@@ -66,33 +53,11 @@ Page(Object.assign({}, {
     wx.getSystemInfo({
       //获取系统信息成功，将系统窗口的宽高赋给页面的宽高  
       success: function (res) {
-        //console.log(res.windowWidth)
         that.width = res.windowWidth / 2.9  //2.6
         that.height = res.windowWidth / 2.9  //2.6
       }
     })
-    //console.log(this.width, this.height)
-    that.getPrompt();
-    that.getDelivery();
-    if (!that.data.onLoadStatus) {
-      that.showDialog('.onLoad-err')
-    }
 
-  },
-  onShareAppMessage: function () {
-    return {
-      title: wx.getStorageSync('mallName') + app.globalData.shareProfile,
-      path: '/pages/category/index',
-      success: function (res) {
-        // 转发成功
-      },
-      fail: function (res) {
-        // 转发失败
-      }
-    }
-  },
-  onShow: function () {
-    var that = this
   },
   //onReady生命周期函数，监听页面初次渲染完成  
   onReady: function () {
@@ -100,237 +65,6 @@ Page(Object.assign({}, {
     this.canvasClock()
     //对canvasClock函数循环调用  
     this.interval = setInterval(this.canvasClock, 1000)
-  },
-  tapClassify: function (e) {
-    var that = this;
-    var id = e.target.dataset.id;
-    if (id === that.data.classifyViewed) {
-      that.setData({
-        scrolltop: 0,
-      })
-    } else {
-      that.setData({
-        classifyViewed: id,
-      });
-      console.log('id:', that.data.classifyViewed)
-      for (var i = 0; i < that.data.categories.length; i++) {
-        if (id === that.data.categories[i].id) {
-          that.setData({
-            page: 1,
-            scrolltop: 0,
-            goodsListCurrent: that.data.goodsList[i]
-          })
-        }
-      }
-    }
-    /*for (let i = 0; i < that.data.categories.length; i++) {
-      if (id === that.data.categories[i].key) {
-        that.setData({
-          activeCategoryId: that.data.categories[i].id,
-          page: 1,
-          scrolltop: 0,
-        });
-      }
-    }*/
-
-  },
-  //事件处理函数
-  toDetailsTap: function (e) {
-    wx.navigateTo({
-      url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
-    })
-  },
-  reLoad: function () {
-    var that = this
-    that.setData({
-      loadingStatus: true
-    })
-    /*wx.showLoading({
-      title: '努力加载中···',
-      mask: true,
-    });*/
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/category/all',
-      success: function (res) {
-        var categories = []; //{ id: 0, name: "全品类" }
-        if (res.data.code == 0) {
-          for (var i = 0; i < res.data.data.length; i++) {
-            categories.push(res.data.data[i]);
-          }
-        }
-        that.setData({
-          categories: categories,
-          page: 1,
-        });
-        that.getGoods(0);//获取全品类商品
-      },
-      fail: function () {
-        that.setData({
-          onLoadStatus: false,
-        })
-        wx.hideLoading()
-        console.log('11')
-      }
-    })
-  },
-  getGoods: function (categoryId) {
-    if (categoryId == 0) {
-      categoryId = "";
-    }
-    console.log(categoryId)
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/list',
-      data: {
-        page: that.data.page,
-        pageSize: that.data.pageSize,
-        categoryId: categoryId
-      },
-      success: function (res) {
-        that.setData({
-          goods: [],
-        });
-        var goods = [];
-
-        if (res.data.code != 0 || res.data.data.length == 0) {
-          that.setData({
-            prePageBtn: false,
-            nextPageBtn: true,
-            toBottom: true
-          });
-          return;
-        }
-
-        for (var i = 0; i < res.data.data.length; i++) {
-          goods.push(res.data.data[i]);
-        }
-
-
-        console.log('getGoods----------------------')
-        console.log(goods)
-
-        var page = that.data.page;
-        var pageSize = that.data.pageSize;
-        for (let i = 0; i < goods.length; i++) {
-          goods[i].starscore = (goods[i].numberGoodReputation / goods[i].numberOrders) * 5
-          goods[i].starscore = Math.ceil(goods[i].starscore / 0.5) * 0.5
-          goods[i].starpic = starscore.picStr(goods[i].starscore)
-        }
-        that.setData({
-          goods: goods,
-        });
-        console.log('getGoodsReputation----------------------')
-        console.log(goods)
-
-
-        wx.request({
-          url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/list',
-          data: {
-            page: that.data.page,
-            pageSize: that.data.pageSize,
-            categoryId: categoryId
-          },
-          success: function (res) {
-            var categories = that.data.categories
-            var goodsList = [],
-              id,
-              key,
-              name,
-              goodsTemp = []
-            for (let i = 0; i < categories.length; i++) {
-              id = categories[i].id;
-              key = categories[i].key;
-              name = categories[i].name;
-              goodsTemp = [];
-              for (let j = 0; j < goods.length; j++) {
-                if (goods[j].categoryId === id) {
-                  goodsTemp.push(goods[j])
-                }
-              }
-              goodsList.push({ 'id': id, 'key': key, 'name': name, 'goods': goodsTemp })
-              console.log("你好," + categories[i].name)
-            }
-
-            console.log(goodsList, 'womendeshijie')
-            for (var i = 0; i < goodsList.length; i++) {
-              if (goodsList[i].goods.length === 0) {
-                continue;
-              } else {
-                that.setData({
-                  goodsList: goodsList,
-                  onLoadStatus: true,
-                  activeCategoryId: categories[i].id,
-                  classifyViewed: categories[i].id
-                })
-                for (var j = 0; j < that.data.categories.length; j++) {
-                  if (categories[i].id === that.data.categories[j].id) {
-                    that.setData({
-                      scrolltop: 0,
-                      goodsListCurrent: that.data.goodsList[j],
-                    })
-                  }
-                }
-                break;
-              }
-            }
-
-            console.log('getGoodsList----------------------')
-            console.log(that.data.goodsList)
-            that.setData({
-              loadingStatus: false,
-              loadingFinish: true
-            })
-            setTimeout(() => {
-              that.setData({
-                loadingFinish: false
-              })
-            }, 1500)
-
-          },
-          fail: function () {
-            that.setData({
-              onLoadStatus: false,
-            })
-            console.log('33')
-          }
-        })
-      }
-    })
-  },
-  getPrompt: function () {
-    var that = this
-    //  获取关于我们Title
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/config/get-value',
-      data: {
-        key: 'shopPrompt'
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.setData({
-            shopPrompt: res.data.data.value,
-            movable: { text: res.data.data.value }
-          })
-        }
-      }
-    })
-  },
-  getDelivery: function () {
-    var that = this
-    //  获取关于我们Title
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/config/get-value',
-      data: {
-        key: 'shopDelivery'
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.setData({
-            shopDelivery: res.data.data.value
-          })
-        }
-      }
-    })
   },
   canvasClock: function () {
     var context = wx.createCanvasContext(this.canvasId, this)//创建并返回绘图上下文（获取画笔）  
@@ -459,20 +193,55 @@ Page(Object.assign({}, {
   onUnload: function () {
     clearInterval(this.interval)
   },
-  showDialog: function (dialogName) {
-    // let dialogComponent = this.selectComponent(dialogName)
-    // dialogComponent && dialogComponent.show();
-  },
-  hideDialog: function (dialogName) {
-    // let dialogComponent = this.selectComponent(dialogName)
-    // dialogComponent && dialogComponent.hide();
-  },
   onConfirm: function () {
     this.hideDialog('.onLoad-err')
     this.reLoad()
   },
   onCancel: function () {
     this.hideDialog('.onLoad-err')
-  }
+  },
+  /**
+   * 切换商品分类菜单
+   */
+  tapClassify: function (e) {
+    var that = this;
+    var id = e.target.dataset.id;
+    if (id === that.data.classifyViewed) {
+      that.setData({
+        scrolltop: 0,
+      })
+    } else {
+      that.setData({
+        classifyViewed: id,
+      });
+      console.log('id:', that.data.classifyViewed)
+      for (var i = 0; i < that.data.categories.length; i++) {
+        if (id === that.data.categories[i].id) {
+          that.setData({
+            page: 1,
+            scrolltop: 0,
+            goodsListCurrent: that.data.goodsList[i]
+          })
+        }
+      }
+    }
+    for (let i = 0; i < that.data.categories.length; i++) {
+      if (id === that.data.categories[i].key) {
+        that.setData({
+          activeCategoryId: that.data.categories[i].id,
+          page: 1,
+          scrolltop: 0,
+        });
+      }
+    }
+  },
+  /**
+   * 跳转到商品详情页
+   */
+  toDetailsTap: function (e) {
+    wx.navigateTo({
+      url: "/pages/bookDetail/bookDetail?id=" + e.currentTarget.dataset.id
+    })
+  },
 }));
 

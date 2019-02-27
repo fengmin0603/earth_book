@@ -7,6 +7,7 @@ App({
    */
   onLaunch: function () {
     var that = this;
+
     //  获取商城名称
     wx.request({
       url: 'https://api.it120.cc/' + that.globalData.subDomain + '/config/get-value',
@@ -15,42 +16,13 @@ App({
       },
       success: function (res) {
         if (res.data.code == 0) {
-          wx.setStorageSync('mallName', res.data.data.value);
+          wx.setStorageSync('mallName', res.data.data.value);//将商城名称保存在本地存储
         }
       }
     })
-    wx.request({
-      url: 'https://api.it120.cc/' + that.globalData.subDomain + '/score/send/rule',
-      data: {
-        code: 'goodReputation'
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.globalData.order_reputation_score = res.data.data[0].score;
-        }
-      }
-    })
-    wx.request({
-      url: 'https://api.it120.cc/' + that.globalData.subDomain + '/config/get-value',
-      data: {
-        key: 'recharge_amount_min'
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.globalData.recharge_amount_min = res.data.data.value;
-        }
-      }
-    })
-    // 获取砍价设置
-    wx.request({
-      url: 'https://api.it120.cc/' + that.globalData.subDomain + '/shop/goods/kanjia/list',
-      data: {},
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.globalData.kanjiaList = res.data.data.result;
-        }
-      }
-    })
+  /**
+   * 获取全部商品分类
+   */
     wx.request({
       url: 'https://api.it120.cc/' + that.globalData.subDomain + '/shop/goods/category/all',
       success: function (res) {
@@ -69,38 +41,17 @@ App({
         console.log('11')
       }
     })
-  },
-  sendTempleMsg: function (orderId, trigger, template_id, form_id, page, postJsonString, emphasis_keyword) {
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + that.globalData.subDomain + '/template-msg/put',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        token: wx.getStorageSync('token'), //登录接口返回的登录凭证
-        type: 0, //0 小程序 1 服务号
-        module: 'order', //所属模块：immediately 立即发送模板消息；order 所属订单模块
-        business_id: orderId, //登录接口返回的登录凭证
-        trigger: trigger, //module不为immediately时必填，代表对应的【订单】触发的状态
-        template_id: template_id, //模板消息ID
-        form_id: form_id, //type=0时必填，表单提交场景下，为 submit 事件带上的 formId；支付场景下，为本次支付的 prepay_id
-        url: page, //小程序：点击模板卡片后的跳转页面，仅限本小程序内的页面。支持带参数,（示例index?foo=bar）；服务号：跳转的网页地址
-        postJsonString: postJsonString, //模板消息内容
-        emphasis_keyword: emphasis_keyword //小程序："keyword1.DATA" 模板需要放大的关键词，不填则默认无放大
-      },
-      success: (res) => {
-        //console.log(res.data);
-      }
-    })
+
   },
   getGoods: function (categoryId) {
+    /**
+     * 根据商品分类ID，获取该分类对应的商品数组
+     */
     if (categoryId == 0) {
       categoryId = "";
     }
-    console.log(categoryId)
     var that = this;
+
     wx.request({
       url: 'https://api.it120.cc/' + that.globalData.subDomain + '/shop/goods/list',
       data: {
@@ -147,8 +98,6 @@ App({
 
         }
         that.globalData.goods = goods
-        console.log('getGoodsReputation----------------------')
-        console.log(that.globalData.goods)
 
 
         wx.request({
@@ -189,14 +138,9 @@ App({
             console.log('categories:', categories)
             //that.globalData.activeCategoryId = categories[0].id   改为第一个不为null的类
 
-
-            console.log('getGoodsList----------------------')
-            console.log(that.globalData.goodsList)
           },
           fail: function () {
             that.globalData.onLoadStatus = false
-
-            console.log('33')
           }
         })
 
@@ -223,9 +167,9 @@ App({
     bgGreen: 175,
     bgBlue: 180,
     userInfo: null,
-    subDomain: "tggtest",// 商城后台个性域名tgg
+    subDomain: "dadishuyuan",// 商城后台个性域名tgg
     version: "1.0.0",
-    shareProfile: '   一流的服务，做超新鲜的水果' // 首页转发的时候术语
+    shareProfile: '让您购书更快更方便' // 首页转发的时候术语
   }
   // 根据自己需要修改下单时候的模板消息内容设置，可增加关闭订单、收货时候模板消息提醒
 })
