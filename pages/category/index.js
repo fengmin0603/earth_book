@@ -10,12 +10,17 @@ Page(Object.assign({}, {
     activeCategoryId: null,
     goods: [],
     goodsList: [],
+    classifyViewed: '',
+    scrolltop: 0,
+    activeCategoryId: null,
+    goodsListCurrent:[],
     page: 1,
     pageSize: 5000,
     width: 0,
     height: 0
   },
   onLoad: function (options) {
+    console.log('options:::', options);
     var that = this
     /**
      * 设置当前页面顶部标题

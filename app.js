@@ -26,6 +26,7 @@ App({
     wx.request({
       url: 'https://api.it120.cc/' + that.globalData.subDomain + '/shop/goods/category/all',
       success: function (res) {
+        
         var categories = []; //{ id: 0, name: "全品类" }
         if (res.data.code == 0) {
           for (var i = 0; i < res.data.data.length; i++) {
@@ -33,6 +34,8 @@ App({
           }
         }
         that.globalData.categories = categories
+        console.log('～～～～类列表获取完成：：：');
+        console.log(that.globalData.categories)
         that.getGoods(0);//获取全品类商品
       },
       fail: function () {
@@ -131,17 +134,12 @@ App({
             that.globalData.goodsList = goodsList
             that.globalData.onLoadStatus = true
             //that.globalData.activeCategoryId = categories[0].id   改为第一个不为null的类
-
+            console.log('～～～～～～商品列表获取完成：：：：', that.globalData.goodsList);
           },
           fail: function () {
             that.globalData.onLoadStatus = false
           }
         })
-
-
-
-
-
       }
     })
   },
@@ -173,7 +171,9 @@ App({
   globalData: {
     page: 1, //初始加载商品时的页面号
     pageSize: 10000, //初始加载时的商品数，设置为10000保证小商户能加载完全部商品
-    categories: [],
+    categories: [
+      { "dateAdd": "2019-02-27 15:05:33", "dateUpdate": "2019-02-27 15:08:21", "icon": "https://cdn.it120.cc/apifactory/2019/02/27/67fa1d165cc8cb321e60da7b14277e80.png", "id": 30909, "isUse": true, "key": "000", "level": 1, "name": "本地热卖", "paixu": 0, "pid": 0, "type": "旺季热卖商品", "userId": 13040 }
+    ],
     goods: [],
     hotGoods: ['桔', '火龙果', '香蕉', '酸奶', '甘蔗'], //自定义热门搜索商品
     goodsName: [],

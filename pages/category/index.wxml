@@ -3,7 +3,7 @@
     <view class='shop-Info'>
       <image class="logo" src="{{shopLogo}}" />
       <view class='shop-words'>
-        <view class="welcome-ellipsis">欢迎光临！</view>
+        <view class="welcome-ellipsis">欢迎光临！{{categories.length}}</view>
         <view class="delivery-ellipsis">
           <wxc-elip line='2'> {{shopDelivery}} </wxc-elip>
         </view>
