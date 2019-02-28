@@ -4,7 +4,7 @@ Page({
   data: {
     aboutUsTitle: '',
     aboutUsContent: '',
-    servicePhoneNumber: '',
+    servicePhoneNumber: '13831959783',
     balance: 0,
     freeze: 0,
     score: 0,
@@ -32,7 +32,7 @@ Page({
     let userInfo = wx.getStorageSync('userInfo')
     if (!userInfo) {
       wx.navigateTo({
-        url: "/pages/authorize/index"
+        url: "/pages/authorize/authorize"
       })
     }
   },
@@ -40,9 +40,9 @@ Page({
     var that = this;
     that.getUserApiInfo();
     that.getUserAmount();
-    that.checkScoreSign();
+    // that.checkScoreSign();
     that.getAboutUs();
-    that.getservicePhoneNumber();
+    // that.getservicePhoneNumber();
 
     var userInfo = wx.getStorageSync('userInfo')
     if (userInfo) {
@@ -51,6 +51,27 @@ Page({
       })
     }
 
+  },
+  scoresign: function () {
+    var that = this;
+    wx.request({
+      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/score/sign',
+      data: {
+        token: wx.getStorageSync('token')
+      },
+      success: function (res) {
+        if (res.data.code == 0) {
+          that.getUserAmount();
+          that.checkScoreSign();
+        } else {
+          wx.showModal({
+            title: '错误',
+            content: res.data.msg,
+            showCancel: false
+          })
+        }
+      }
+    })
   },
   aboutUs: function () {
     var that = this
@@ -73,42 +94,6 @@ Page({
         })
       },
       complete: function (res) { },
-    })
-  },
-  getPhoneNumber: function (e) {
-    if (!e.detail.errMsg || e.detail.errMsg != "getPhoneNumber:ok") {
-      console.log(e.detail.errMsg)
-      wx.showModal({
-        title: '提示',
-        content: '无法获取手机号码',
-        showCancel: false
-      })
-      return;
-    }
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/wxapp/bindMobile',
-      data: {
-        token: wx.getStorageSync('token'),
-        encryptedData: e.detail.encryptedData,
-        iv: e.detail.iv
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          wx.showToast({
-            title: '绑定成功',
-            icon: 'success',
-            duration: 2000
-          })
-          that.getUserApiInfo();
-        } else {
-          wx.showModal({
-            title: '提示',
-            content: '绑定失败',
-            showCancel: false
-          })
-        }
-      }
     })
   },
   getUserApiInfo: function () {
@@ -179,74 +164,10 @@ Page({
       }
     })
   },
-  getservicePhoneNumber: function () {
-    var that = this
-    //  获取客服电话
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/config/get-value',
-      data: {
-        key: 'servicePhoneNumber'
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.setData({
-            servicePhoneNumber: res.data.data.value
-          })
-        }
-      }
-    })
-  },
-  checkScoreSign: function () {
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/score/today-signed',
-      data: {
-        token: wx.getStorageSync('token')
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.setData({
-            score_sign_continuous: res.data.data.continuous
-          });
-        }
-      }
-    })
-  },
-  scoresign: function () {
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/score/sign',
-      data: {
-        token: wx.getStorageSync('token')
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.getUserAmount();
-          that.checkScoreSign();
-        } else {
-          wx.showModal({
-            title: '错误',
-            content: res.data.msg,
-            showCancel: false
-          })
-        }
-      }
-    })
-  },
   relogin: function () {
     wx.navigateTo({
-      url: "/pages/authorize/index"
+      url: "/pages/authorize/authorize"
     })
     this.onLoad()
-  },
-  recharge: function () {
-    wx.navigateTo({
-      url: "/pages/recharge/index"
-    })
-  },
-  withdraw: function () {
-    wx.navigateTo({
-      url: "/pages/withdraw/index"
-    })
   }
 })

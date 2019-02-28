@@ -6,13 +6,6 @@
       <view class='userinfo-text'>
         <text class="userinfo-nickname">{{ userInfo.nickName }}</text>
         <view style='height:10rpx;'></view>
-        <!-- 部分未通过认证的开发者无权限获得用户绑定电话信息，故暂时隐藏此功能。具体可见微信官方https://developers.weixin.qq.com/miniprogram/dev/api/getPhoneNumber.html -->
-        <!--<wxc-label wx:if="{{userMobile}}" class="phoneNumber" type='fill' type-color="#747ba1">
-            {{userMobile}}
-          </wxc-label>
-          <button wx:else class="pin-phoneNumber" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" size='min'>
-            点击绑定手机号码
-          </button>-->
       </view>
 
     </view>
@@ -24,11 +17,11 @@
       </view>
     </view>
     <view class='userInfoMask'></view>
-    <wxc-button class='my-sign' wx:if="{{score_sign_continuous == 0}}" size="small" type="beauty" value="每日签到" bindclick="scoresign"></wxc-button>
-    <wxc-button class='my-sign' wx:if="{{score_sign_continuous > 0}}" size="small" type="secondary" value="已连续签到 {{score_sign_continuous}} 天" bindclick="scoresign"></wxc-button>
+    <!-- <wxc-button class='my-sign' wx:if="{{score_sign_continuous == 0}}" size="small" type="beauty" value="每日签到" bindclick="scoresign"></wxc-button>
+    <wxc-button class='my-sign' wx:if="{{score_sign_continuous > 0}}" size="small" type="secondary" value="已连续签到 {{score_sign_continuous}} 天" bindclick="scoresign"></wxc-button> -->
   </view>
 
-  <view class='h-contents'>
+  <!-- <view class='h-contents'>
     <view class='a-item'>
       <wxc-icon type='purse' size='{{iconSize-10}}' color='#69C3AA' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
       <view class='my'>
@@ -55,7 +48,7 @@
       <view style='height:8rpx;'> </view>
       <wxc-button type="beauty" size="small" value="提现" bindclick="withdraw"></wxc-button>
     </view>
-  </view>
+  </view> -->
 
   <view class="user-menu">
     <view class="item">
@@ -65,18 +58,18 @@
       </navigator>
     </view>
     <view class="item">
-      <navigator url="/pages/select-address/index" hover-class="none" class="a">
+      <navigator url="/pages/receiveAddress/receiveAddress" hover-class="none" class="a">
         <wxc-icon type='address' size='{{iconSize}}' color='{{iconColor}}' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
         <text class="txt">收货地址</text>
       </navigator>
     </view>
     <view class="item no-border-right">
-      <navigator url="/pages/ucenter/location/location" hover-class="none" class="a">
+      <navigator url="/pages/location/location" hover-class="none" class="a">
         <wxc-icon type='location' size='{{iconSize}}' color='{{iconColor}}' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
         <text class="txt">到店里</text>
       </navigator>
     </view>
-    <view class="item">
+    <!-- <view class="item">
       <navigator url="/pages/ucenter/mycoupons/index" hover-class="none" class="a">
         <wxc-icon type='coupon' size='{{iconSize}}' color='{{iconColor}}' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
         <text class="txt">优惠券</text>
@@ -93,7 +86,7 @@
         <wxc-icon type='footprint' size='{{iconSize}}' color='lightgray' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
         <text class="txt" style='color:lightgray;text-decoration: line-through;'>足迹</text>
       </navigator>
-    </view>
+    </view> -->
     <view class="item item-bottom" bindtap='makePhoneCall'>
       <navigator url="" hover-class="none" class="a">
         <wxc-icon type='group' size='{{iconSize}}' color='{{iconColor}}' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
@@ -101,24 +94,15 @@
       </navigator>
     </view>
     <view class="item item-bottom" bindtap="aboutUs">
-      <navigator url="url" hover-class="none" class="a">
+      <navigator url="" hover-class="none" class="a">
         <wxc-icon type='help' size='{{iconSize}}' color='{{iconColor}}' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
         <text class="txt">关于我们</text>
       </navigator>
     </view>
-    <view class="item no-border-bottom">
-      <navigator url="/pages/ucenter/feedback/feedback" hover-class="none" class="a">
-        <wxc-icon type='comment' size='{{iconSize}}' color='{{iconColor}}' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
-        <text class="txt">意见反馈</text>
-      </navigator>
-    </view>
   </view>
   <view style="height:20rpx;width:100%;"></view>
-  <view class="my-item" style='border:none;padding:0rpx;margin:0rpx;background:none;border:none;height:auto;line-height:auto;'>
-    <wxc-button type="danger" value="重新授权登录" bindclick="relogin"></wxc-button>
-  </view>
 
-  <view class="version" style='margin-top:10rpx;font-size:18rpx;'>Copyright © 2017-2018 qindiandadudu(GitHub ID)</view>
+  <view class="version" style='margin-top:10rpx;font-size:18rpx;'>Copyright © 2019 大地书园</view>
   <view class='version' style='height:20rpx;line-height:20rpx;font-size:16rpx;font-style: oblique;'>Powered by EastWorld v {{version}}</view>
   <view style="height:12rpx;width:100%;"></view>
 </view>

@@ -50,7 +50,7 @@ Page({
   },
   toIndexPage: function () {
     wx.switchTab({
-      url: "/pages/classification/index"
+      url: "/pages/category/index"
     });
   },
 

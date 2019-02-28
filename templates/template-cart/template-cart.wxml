@@ -4,7 +4,7 @@
   </view>
 
   <view class="shop-cart-empty">
-    <wxc-abnor type="CART" title='购物车空空如也~' bind:abnortap="toIndexPage"></wxc-abnor>
+    <wxc-abnor type="CART" title='购物车空空如也~' bind:abnortap="toIndexPage" button='买书去～'></wxc-abnor>
   </view>
 </template>
 
