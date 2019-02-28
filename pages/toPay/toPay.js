@@ -164,7 +164,7 @@ Page({
 
         // 下单成功，跳转到订单管理界面
         wx.redirectTo({
-          url: "/pages/ucenter/order-list/index"
+          url: "/pages/orderList/orderList"
         });
       }
     })

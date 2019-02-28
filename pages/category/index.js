@@ -5,7 +5,7 @@ Page(Object.assign({}, {
     onLoadStatus: true,
     shopLogo: 'https://cdn.it120.cc/apifactory/2018/06/10/527a0d6e3b3f1ffc32748193d743da26.jpg',
     categories: [],
-    shopDelivery: ['¥28起送 | 同城免费送 | 由于业务有限仅送县城范围'],
+    shopDelivery: [],
     shopPrompt: '正常营业时间8:00AM-19:00PM',
     activeCategoryId: null,
     goods: [],
@@ -57,6 +57,8 @@ Page(Object.assign({}, {
         that.height = res.windowWidth / 2.9  //2.6
       }
     })
+
+    that.getDelivery();
 
   },
   //onReady生命周期函数，监听页面初次渲染完成  
@@ -243,5 +245,26 @@ Page(Object.assign({}, {
       url: "/pages/bookDetail/bookDetail?id=" + e.currentTarget.dataset.id
     })
   },
+  /**
+   * 获取快递相关提示
+   */
+  getDelivery: function () {
+    var that = this
+    //  获取关于我们Title
+    wx.request({
+      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/config/get-value',
+      data: {
+        key: 'shopDelivery'
+      },
+      success: function (res) {
+        if (res.data.code == 0) {
+          that.setData({
+            shopDelivery: res.data.data.value
+          })
+        }
+      }
+    })
+  },
+
 }));
 

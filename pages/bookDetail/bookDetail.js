@@ -29,7 +29,6 @@ Page({
 
   //事件处理函数
   swiperchange: function (e) {
-    //console.log(e.detail.current)
     this.setData({
       swiperCurrent: e.detail.current
     })
@@ -83,7 +82,7 @@ Page({
   },
   goShopCar: function () {
     wx.reLaunch({
-      url: "/pages/shop-cart/index"
+      url: "/pages/buyCar/buyCar"
     });
   },
   toAddShopCar: function () {
@@ -302,7 +301,7 @@ Page({
       this.closePopupTap();
 
       wx.navigateTo({
-        url: "/pages/to-pay-order/index?orderType=buyNow"
+        url: "/pages/toPay/toPay?orderType=buyNow"
       })
     }
   },
