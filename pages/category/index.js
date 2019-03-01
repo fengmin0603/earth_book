@@ -21,6 +21,7 @@ Page(Object.assign({}, {
   },
   onLoad: function (options) {
     console.log('options:::', options);
+    console.log('mallName:::', wx.getStorageSync('mallName'));
     var that = this
     /**
      * 设置当前页面顶部标题
@@ -29,12 +30,20 @@ Page(Object.assign({}, {
       title: wx.getStorageSync('mallName')
     })
 
+    let categories = wx.getStorageSync('categories')
+    let goods = wx.getStorageSync('goods')
+    let goodsList = wx.getStorageSync('goodsList')
+    let activeCategoryId = wx.getStorageSync('activeCategoryId')
+
+    console.log('that.globalData.activeCategoryId:::', app.globalData.activeCategoryId);
+    console.log('activeCategoryId:::', activeCategoryId);
+
     that.setData({
-      categories: app.globalData.categories,
+      categories: categories,
       goods: app.globalData.goods,
-      goodsList: app.globalData.goodsList,
+      goodsList: goodsList,
       onLoadStatus: app.globalData.onLoadStatus,
-      activeCategoryId: app.globalData.activeCategoryId,
+      activeCategoryId: activeCategoryId,
       background_color: app.globalData.globalBGColor,
       bgRed: app.globalData.bgRed,
       bgGreen: app.globalData.bgGreen,

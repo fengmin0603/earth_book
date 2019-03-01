@@ -33,6 +33,7 @@ App({
             categories.push(res.data.data[i]);
           }
         }
+        wx.setStorageSync('categories', categories);//将分类数据保存在本地存储
         that.globalData.categories = categories
         console.log('～～～～类列表获取完成：：：');
         console.log(that.globalData.categories)
@@ -97,7 +98,7 @@ App({
 
         }
         that.globalData.goods = goods
-
+        wx.setStorageSync('goods', goods)
 
         wx.request({
           url: 'https://api.it120.cc/' + that.globalData.subDomain + '/shop/goods/list',
@@ -127,12 +128,17 @@ App({
               }
               if ((that.globalData.activeCategoryId === null) & (goodsTemp.length > 0)) {
                 that.globalData.activeCategoryId = categories[i].id
+                wx.setStorageSync('activeCategoryId', categories[i].id);
               }
               goodsList.push({ 'id': id, 'key': key, 'name': name, 'type': typeStr, 'goods': goodsTemp })
             }
 
+
+
             that.globalData.goodsList = goodsList
             that.globalData.onLoadStatus = true
+
+            wx.setStorageSync('goodsList', goodsList)
             //that.globalData.activeCategoryId = categories[0].id   改为第一个不为null的类
             console.log('～～～～～～商品列表获取完成：：：：', that.globalData.goodsList);
           },

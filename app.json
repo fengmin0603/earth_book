@@ -1,13 +1,14 @@
 {
   "pages":[
-    "pages/category/index",
     "pages/start/start",
     "pages/index/index",
+    "pages/category/index",
+    "pages/choiceness/choiceness",
+    "pages/authorize/authorize",
     "pages/bookDetail/bookDetail",
     "pages/buyCar/buyCar",
     "pages/toPay/toPay",
     "pages/orderList/orderList",
-    "pages/authorize/authorize",
     "pages/mine/mine",
     "pages/receiveAddress/receiveAddress",
     "pages/addAddress/addAddress",
@@ -27,6 +28,12 @@
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
+      {
+        "pagePath": "pages/choiceness/choiceness",
+        "iconPath": "images/nav/select-off.png",
+        "selectedIconPath": "images/nav/select-on.png",
+        "text": "精选"
+      },
       {
         "pagePath": "pages/category/index",
         "iconPath": "images/nav/classification-off.png",

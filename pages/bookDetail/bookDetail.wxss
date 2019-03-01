@@ -221,7 +221,7 @@ swiper-item image {
 
 .footer-box .join-shop-cart {
   text-align: center;
-  width: 250rpx;
+  width: 310rpx;
   height: 100%;
   line-height: 100rpx;
   background-color: #ff6850;
@@ -232,7 +232,7 @@ swiper-item image {
 .footer-box .now-buy {
   text-align: center;
   height: 100%;
-  width: 250rpx;
+  width: 310rpx;
   line-height: 100rpx;
   background-color: #e64340;
   color: #fff;

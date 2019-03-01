@@ -21,7 +21,8 @@
           进入店铺 
           <wxc-icon style='margin-left:20rpx;' color="#fff" type="arrow-right"></wxc-icon>
         </wxc-button>
-        <text class="copyright">© 2019 dadishuyuan改编,感谢 qindiandadudu开源</text>
+        <text class="copyright">© 2019 大地书园</text>
+        <!-- <text class="">感谢钦点大都督开源</text> -->
       </view>
     </view>
   </block>

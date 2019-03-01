@@ -29,7 +29,7 @@ Page({
       that.setData({
         remind: ''
       });
-    }, 5000);
+    }, 1500);
     wx.onAccelerometerChange(function (res) {
       var angle = -(res.x * 30).toFixed(1);
       if (angle > 14) { angle = 14; }
