@@ -116,13 +116,13 @@ Page({
   },
   toDetailsTap: function (e) {
     wx.navigateTo({
-      url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
+      url: "/pages/bookDetail/bookDetail?id=" + e.currentTarget.dataset.id
     })
   },
   tapBanner: function (e) {
     if (e.currentTarget.dataset.id != 0) {
       wx.navigateTo({
-        url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
+        url: "/pages/bookDetail/bookDetail?id=" + e.currentTarget.dataset.id
       })
     }
   },
