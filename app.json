@@ -4,7 +4,6 @@
     "pages/index/index",
     "pages/category/index",
     "pages/choiceness/choiceness",
-    "pages/authorize/authorize",
     "pages/bookDetail/bookDetail",
     "pages/buyCar/buyCar",
     "pages/toPay/toPay",
@@ -13,6 +12,7 @@
     "pages/receiveAddress/receiveAddress",
     "pages/addAddress/addAddress",
     "pages/location/location",
+    "pages/authorize/authorize",
     "pages/logs/logs"
   ],
   "window":{

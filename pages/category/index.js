@@ -3,7 +3,7 @@ var starscore = require("../../templates/starscore/starscore.js");
 Page(Object.assign({}, {
   data: {
     onLoadStatus: true,
-    shopLogo: 'https://cdn.it120.cc/apifactory/2018/06/10/527a0d6e3b3f1ffc32748193d743da26.jpg',
+    shopLogo: '/images/logo.jpeg',
     categories: [],
     shopDelivery: [],
     shopPrompt: '正常营业时间8:00AM-19:00PM',

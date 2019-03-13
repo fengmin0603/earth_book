@@ -21,7 +21,12 @@ Page({
     })
   },
   onShow: function () {
-
+    console.log('!!!!',!wx.getStorageSync('token'));
+    if (!wx.getStorageSync('token')){
+      wx.switchTab({
+        url: '/pages/mine/mine',
+      });
+    }
   },
   onReady: function () {
     var that = this;

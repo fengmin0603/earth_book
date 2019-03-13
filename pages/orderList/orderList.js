@@ -201,7 +201,8 @@ Page({
               }
             })
           } else {
-            wxpay.wxpay(app, money, orderId, "/pages/ucenter/order-list/index");
+            debugger;
+            wxpay.wxpay(app, money, orderId, "/pages/orderList/orderList");
           }
         } else {
           wx.showModal({
