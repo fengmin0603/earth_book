@@ -5,7 +5,7 @@ var app = getApp()
 Page({
   data: {
     goodsList: [],
-    isNeedLogistics: 0, // 是否需要物流信息
+    isNeedLogistics: 1, // 是否需要物流信息
     allGoodsPrice: 0,
     yunPrice: 0,
     allGoodsAndYunPrice: 0,
@@ -18,6 +18,7 @@ Page({
     curCoupon: null // 当前选择使用的优惠券
   },
   onShow: function () {
+    console.log('onshow:::')
     var that = this;
     var shopList = [];
     //立即购买下单
@@ -46,12 +47,14 @@ Page({
   },
 
   onLoad: function (e) {
+    console.log('onLoad:::')
     var that = this;
     //显示收货地址标识
     that.setData({
       isNeedLogistics: 1,
       orderType: e.orderType
     });
+    console.log()
   },
 
   getDistrictId: function (obj, aaa) {
@@ -65,6 +68,7 @@ Page({
   },
 
   createOrder: function (e) {
+    console.log('createOrder:::')
     var that = this;
     wx.showLoading();
     var loginToken = wx.getStorageSync('token') // 用户登录 token
@@ -81,6 +85,10 @@ Page({
     if (that.data.kjId) {
       postData.kjid = that.data.kjId;
     }
+    console.log('create that.data.isNeedLogistic:::', that.data.isNeedLogistic);
+    that.setData({
+      isNeedLogistics: 1
+    });
     if (that.data.isNeedLogistics > 0) {
       if (!that.data.curAddressData) {
         wx.hideLoading();
@@ -157,7 +165,7 @@ Page({
         postJsonString.keyword1 = { value: res.data.data.orderNumber, color: '#173177' }
         postJsonString.keyword2 = { value: res.data.data.dateAdd, color: '#173177' }
         postJsonString.keyword3 = { value: '已发货' }
-        postJsonString.keyword4 = { value: '您的订单已发货，请保持手机通常，如有任何问题请联系客服13722396885', color: '#173177' }
+        postJsonString.keyword4 = { value: '您的订单已发货，请保持手机通常，如有任何问题请联系客服18103397720', color: '#173177' }
         app.sendTempleMsg(res.data.data.id, 2,
           'ul45AoQgIIZwGviaWzIngBqohqK2qrCqS3JPcHKzljU', e.detail.formId,
           'pages/ucenter/order-details/index?id=' + res.data.data.id, JSON.stringify(postJsonString), 'keyword3.DATA');
@@ -171,6 +179,7 @@ Page({
 
   },
   initShippingAddress: function () {
+    console.log('initShippingAddress:::');
     var that = this;
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/shipping-address/default',
@@ -192,6 +201,7 @@ Page({
     })
   },
   processYunfei: function () {
+    console.log('processYunfei::::');
     var that = this;
     var goodsList = this.data.goodsList;
     var goodsJsonStr = "[";
@@ -222,16 +232,19 @@ Page({
     that.createOrder();
   },
   addAddress: function () {
+    console.log('addAddress:::');
     wx.navigateTo({
-      url: "/pages/address-add/index"
+      url: "/pages/receiveAddress/receiveAddress"
     })
   },
   selectAddress: function () {
+    console.log('selectAddress:::');
     wx.navigateTo({
-      url: "/pages/select-address/index"
+      url: "/pages/receiveAddress/receiveAddress"
     })
   },
   getMyCoupons: function () {
+    console.log('getMyCoupons:::');
     var that = this;
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/my',
@@ -255,6 +268,7 @@ Page({
     })
   },
   bindChangeCoupon: function (e) {
+    console.log('bindChangeCoupon');
     const selIndex = e.detail.value[0] - 1;
     if (selIndex === -1) {
       this.setData({
@@ -263,7 +277,6 @@ Page({
       });
       return;
     }
-    //console.log("selIndex:" + selIndex);
     this.setData({
       youhuijine: this.data.coupons[selIndex].money,
       curCoupon: this.data.coupons[selIndex]

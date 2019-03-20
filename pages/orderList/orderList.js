@@ -132,7 +132,7 @@ Page({
   orderDetail: function (e) {
     var orderId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: "/pages/order-details/index?id=" + orderId
+      url: "/pages/orderDetail/orderDetail?id=" + orderId
     })
   },
   cancelOrderTap: function (e) {
@@ -201,7 +201,6 @@ Page({
               }
             })
           } else {
-            debugger;
             wxpay.wxpay(app, money, orderId, "/pages/orderList/orderList");
           }
         } else {

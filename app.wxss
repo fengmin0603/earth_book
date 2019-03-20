@@ -12,7 +12,12 @@
 .wxParse-img {
   display: block !important;
 }
-
+.sec-wrap{
+  width:90%;
+}
+.zan-steps__title--desc{
+  color:green;
+}
 
 
 

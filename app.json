@@ -8,6 +8,7 @@
     "pages/buyCar/buyCar",
     "pages/toPay/toPay",
     "pages/orderList/orderList",
+    "pages/orderDetail/orderDetail",
     "pages/mine/mine",
     "pages/receiveAddress/receiveAddress",
     "pages/addAddress/addAddress",
