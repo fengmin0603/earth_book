@@ -1,4 +1,4 @@
-<view class="container">{{isNeedLogistics}}{{isNeedLogistics > 0}}
+<view class="container">
   <form bindsubmit="createOrder" report-submit="true">
     <view class="address-box" wx:if="{{isNeedLogistics > 0}}">
       <view class="add-address" wx:if="{{!curAddressData}}">

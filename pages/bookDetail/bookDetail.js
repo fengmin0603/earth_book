@@ -398,9 +398,10 @@ Page({
     return buyNowInfo;
   },
   onShareAppMessage: function () {
+    let _this = this;
     return {
       title: this.data.goodsDetail.basicInfo.name,
-      path: '/pages/goods-details/index?id=' + this.data.goodsDetail.basicInfo.id + '&inviter_id=' + wx.getStorageSync('uid'),
+      path: '/pages/bookDetail/bookDetail?id=' + _this.data.goodsDetail.basicInfo.id + '&inviter_id=' + wx.getStorageSync('uid'),
       success: function (res) {
         // 转发成功
       },

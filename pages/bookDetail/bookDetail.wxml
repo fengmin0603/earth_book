@@ -28,7 +28,7 @@
     <view class="goods-info-fx" >
       <wxc-icon type='share' size='60' color='#e64340'></wxc-icon>
       <button open-type="share">分享</button>
-      <text>分享有赏</text>
+      <text style="width:30px;text-align:center;">分享</text>
     </view>
   </view>
   <view wx:if="{{curGoodsKanjia}}" class="row-arrow" bindtap="goKanjia">
